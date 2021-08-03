@@ -65,14 +65,29 @@ const Datatable = () => {
   }, []);
   // handle delete
   const handleDelete = (id) => {
-    let newData = userDetails.filter((data) => data.id !== id);
-    setUserDetails(newData);
+    if (id > 10) {
+      alert(
+        "Please DELETE User under 10 as JsonPlaceholder Api does not work after userid 10 for more details please read jsonplaceholder Guides"
+      );
+      let newData = userDetails.filter((data) => data.id !== id);
+      setUserDetails(newData);
+      return;
+    }
+
+    axios
+      .delete(`https://jsonplaceholder.typicode.com/users/${id}`)
+      .then((data) => {
+        console.log(data);
+        let newData = userDetails.filter((data) => data.id !== id);
+        setUserDetails(newData);
+      })
+      .catch((err) => console.log(err));
   };
   //handleUpdate
   const handleUpdate = (id) => {
     if (id > 10) {
       alert(
-        "Please edit User under 10 as JsonPlaceholder Api does not work after userid 10 for more details please read jsonplaceholder Guides"
+        "Please UPDATE User under 10 as JsonPlaceholder Api does not work after userid 10 for more details please read jsonplaceholder Guides"
       );
       return;
     }
