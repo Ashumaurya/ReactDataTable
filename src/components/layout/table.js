@@ -14,7 +14,6 @@ import TextField from "@material-ui/core/TextField";
 
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import axios from "axios";
-
 const useStyle = makeStyles({
   table: {
     minWidth: 650,
@@ -45,7 +44,15 @@ const Datatable = () => {
   });
 
   const [isUpdating, setisUpdating] = useState(false);
+  const ScrollBottom = () => {
+    window.scroll({
+      top: document.body.offsetHeight,
+      left: 0,
+      behavior: "smooth",
+    });
 
+    console.log("Scrolled");
+  };
   useEffect(() => {
     axios
       .get("https://jsonplaceholder.typicode.com/users")
@@ -69,6 +76,7 @@ const Datatable = () => {
       );
       return;
     }
+    ScrollBottom();
     setisUpdating(true);
     let newData = userDetails.filter((data) => data.id !== id);
     let user = userDetails.filter((data) => data.id === id);
